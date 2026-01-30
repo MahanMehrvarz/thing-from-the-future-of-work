@@ -124,7 +124,7 @@ function App() {
         // 2. Font Sizes & Spacing
         const quote = clone.querySelector('.card-content-quote');
         if (quote) {
-          quote.style.fontSize = '1.7rem';
+          quote.style.fontSize = '2.1rem'; // Updated to match new CSS
           quote.style.lineHeight = '1.1';
         }
 

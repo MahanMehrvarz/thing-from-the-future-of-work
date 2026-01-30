@@ -255,6 +255,7 @@ header h1 {
 }
 
 /* New Logic: Default View (Front) is Content */
+/* New Logic: Default View (Front) is Content */
 .card-front-default {
   /* No rotation, visible by default */
   background-color: white;
@@ -263,63 +264,28 @@ header h1 {
   transform: rotateY(0deg);
 }
 
-/* New Logic: Flipped View (Back) is Deck/Circles */
-.card-back-rotated {
-  /* Rotated 180, hidden behind */
-  color: white;
-  padding: 1.5rem;
-  align-items: flex-start;
-  transform: rotateY(180deg);
-}
+/* ... skipping lines ... */
 
-/* Circles and other inner styles remain universal or can be scoped */
-.circles-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  width: 100%;
-  margin-bottom: auto;
-}
-
-.circle {
-  aspect-ratio: 1;
-  border: 4px solid white;
-  border-radius: 50%;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* Starburst for variety if we want, but sticking to circles for consistency for now */
-
-.card-title-back {
-  font-size: 2rem;
-  font-weight: 900;
-  line-height: 0.9;
-  text-transform: uppercase;
-  text-align: left;
-  margin-top: auto;
-}
-
-.card-title-sub {
-  font-size: 1rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin-top: 5px;
-  opacity: 0.9;
-}
-
-/* Front Design */
 .card-content-quote {
-  font-size: 1.7rem;
-  /* Large text like in the image */
+  font-size: 2.1rem;
+  /* Increased from 1.7rem */
   font-weight: 700;
   line-height: 1.1;
   color: white;
-  /* Will be set by inline style for bg, but text needs contrast? 
-                  Wait, image shows red card with white text. 
-                  If front is also colored, we use color. 
-                  Actually "Arc card" image is red with white text. 
-                  So front is ALSO colored. */
+}
+
+/* ... skipping lines ... */
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+
+  /* ... skipping lines ... */
+  /* Reduce all font sizes inside cards */
+  .card-content-quote {
+    font-size: 1.1rem;
+    /* Increased from 0.95rem to match better readability */
+    line-height: 1.2;
+  }
 }
 
 .card-footer {
