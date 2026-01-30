@@ -115,6 +115,42 @@ function App() {
           width: '219px', height: '332px', transform: 'none', position: 'static', boxSizing: 'border-box'
         });
 
+        // Force Desktop Styles on Children to avoid mobile scaling
+        // 1. Padding
+        if (clone.classList.contains('card-front-default') || clone.classList.contains('card-back-rotated')) {
+          clone.style.padding = '1.5rem';
+        }
+
+        // 2. Font Sizes & Spacing
+        const quote = clone.querySelector('.card-content-quote');
+        if (quote) {
+          quote.style.fontSize = '1.7rem';
+          quote.style.lineHeight = '1.1';
+        }
+
+        const titleBack = clone.querySelector('.card-title-back');
+        if (titleBack) {
+          titleBack.style.fontSize = '2rem';
+        }
+
+        const typeLabel = clone.querySelector('.card-type');
+        if (typeLabel) {
+          typeLabel.style.fontSize = '1.2rem';
+        }
+
+        const catLabel = clone.querySelector('.card-category-small');
+        if (catLabel) {
+          catLabel.style.fontSize = '0.8rem';
+        }
+
+        const circlesGrid = clone.querySelector('.circles-grid');
+        if (circlesGrid) {
+          circlesGrid.style.gap = '8px';
+        }
+
+        const circles = clone.querySelectorAll('.circle');
+        circles.forEach(c => c.style.borderWidth = '4px');
+
         captureContainer.appendChild(clone);
         try {
           const canvas = await html2canvas(clone, { scale: 2, backgroundColor: null, useCORS: true });
