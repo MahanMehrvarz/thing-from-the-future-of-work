@@ -337,3 +337,102 @@ header h1 {
   color: white;
   margin-top: 4px;
 }
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+
+  /* Adjust Base Layout */
+  .app-container {
+    padding-bottom: 100px;
+    /* More space for control bar */
+  }
+
+  /* Compact Header */
+  header {
+    padding: 1rem;
+  }
+
+  .header-row {
+    gap: 0.8rem;
+    flex-direction: column;
+    align-items: stretch;
+    /* Full width children */
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 0.2rem;
+  }
+
+  /* Scrollable Tabs */
+  .tabs {
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    /* Hide scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-button {
+    flex-shrink: 0;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  /* Stacked Mix Grid */
+  .mix-grid {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 2rem;
+  }
+
+  .mix-card-wrapper {
+    width: 100%;
+    max-width: 100%;
+    /* Let it fill screen width minus padding */
+    margin: 0 auto;
+  }
+
+  /* Ensure card itself is centered and reasonably sized */
+  .mix-card-wrapper .card-grid .card-container {
+    max-width: 300px;
+    /* Optimal reading width on phone */
+  }
+
+  /* Standard Grid - Single Column */
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 1rem;
+  }
+
+  .card-container {
+    max-width: 300px;
+  }
+
+  /* Responsive Control Bar */
+  .control-bar {
+    padding: 0.8rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .control-btn {
+    flex: 1 1 auto;
+    /* Grow to fill */
+    min-width: 140px;
+    /* Ensure 2 buttons stack if needed, or fit 2 per row */
+    padding: 0.8rem 0.5rem;
+    /* Larger touch target area */
+    font-size: 0.85rem;
+  }
+}
