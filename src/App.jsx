@@ -157,7 +157,7 @@ function App() {
             <button className="control-btn" onClick={() => handleFlipAll('front')}>Show All Content</button>
             <button className="control-btn" onClick={() => handleFlipAll('back')}>Show All Backs</button>
             <div style={{ width: '20px' }}></div>
-            <button className="control-btn primary" onClick={handleDownload}>Download Cards</button>
+            <button className="control-btn primary" onClick={handleDownload}>Download {activeTab}</button>
           </>
         )}
       </div>
@@ -192,9 +192,7 @@ function App() {
         )}
       </main>
 
-      <footer>
-        <p>Based on 'Thing from the Future' toolkit</p>
-      </footer>
+      {/* Footer removed as requested */}
     </div>
   );
 }

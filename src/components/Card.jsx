@@ -75,7 +75,7 @@ const Card = ({ category, content, color, flipTrigger, initialFlipped = true, on
                         ))}
                     </div>
                     <div className="card-title-back">
-                        THING<br />FROM<br />THE FUTURE
+                        THING<br />FROM<br />THE FUTURE<br />OF WORK
                     </div>
                 </div>
             </div>
