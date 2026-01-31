@@ -175,29 +175,29 @@ header h1 {
 
 /* Mix Future Grid Specifics */
 .mix-grid {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 4rem;
   padding: 2rem;
   max-width: 1400px;
   margin: 0 auto;
+  justify-content: center;
+  /* helps center if the grid doesn't fill width */
 }
 
 .mix-card-wrapper {
-  flex: 1;
-  min-width: 250px;
-  /* Ensure cards don't get too squished */
-  max-width: 320px;
+  /* Remove flex and width constraints to let Grid control sizing */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .mix-grid .card-grid {
   padding: 0;
-  /* Remove padding from inner grid so they align tight */
+  margin: 0;
   gap: 0;
   display: block;
-  /* Disable grid for single item to avoid auto-fill weirdness if container is small */
+  width: 100%;
 }
 
 /* Base Card Grid */
@@ -396,7 +396,7 @@ header h1 {
   /* Stacked Mix Grid - 2 Columns */
   .mix-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     /* 2 columns */
     padding: 1rem;
     gap: 1rem;
