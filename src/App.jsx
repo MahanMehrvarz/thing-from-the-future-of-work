@@ -96,40 +96,72 @@ function App() {
     document.body.appendChild(captureContainer);
 
     const cardElements = Array.from(document.querySelectorAll('.card-inner'));
-    // console.log("Capturing " + cardElements.length + " cards");
 
+    // 1. Capture All Fronts
     for (let i = 0; i < cardElements.length; i++) {
       const originalCardInner = cardElements[i];
-      const isFlipped = originalCardInner.parentElement.classList.contains('flipped');
+      // Always select Front
+      const frontFace = originalCardInner.querySelector('.card-front-default');
 
-      // In Make Futures, we default to Face Up (not flipped).
-      // If the user just clicked shuffle, it flips back then front.
-      // Assuming download happens when cards are stable.
-
-      const selector = isFlipped ? '.card-back-rotated' : '.card-front-default';
-      const faceToCapture = originalCardInner.querySelector(selector);
-
-      if (faceToCapture) {
-        const clone = faceToCapture.cloneNode(true);
+      if (frontFace) {
+        const clone = frontFace.cloneNode(true);
+        // Ensure size and remove transforms
         Object.assign(clone.style, {
-          width: '219px', height: '332px', transform: 'none', position: 'static', boxSizing: 'border-box'
+          width: '219px',
+          height: '332px',
+          transform: 'none',
+          position: 'static',
+          boxSizing: 'border-box'
         });
 
         captureContainer.appendChild(clone);
         try {
-          const canvas = await html2canvas(clone, { scale: 2, backgroundColor: null, useCORS: true });
+          // increased scale for print quality (Scale 5 ~ 300dpi for ~2.3 in width)
+          const canvas = await html2canvas(clone, { scale: 5, backgroundColor: null, useCORS: true });
           const blob = await new Promise(resolve => canvas.toBlob(resolve));
-          const fileName = `${activeTab}_card_${i + 1}.png`;
+          // Naming: Card_Front_1.png
+          const fileName = `${activeTab}_Card_Front_${i + 1}.png`;
           zip.file(fileName, blob);
         } catch (err) {
-          console.error("Error capturing card " + i, err);
+          console.error("Error capturing card front " + i, err);
         }
         captureContainer.removeChild(clone);
       }
     }
+
+    // 2. Capture One Back (from the first card)
+    if (cardElements.length > 0) {
+      const firstCardInner = cardElements[0];
+      const backFace = firstCardInner.querySelector('.card-back-rotated');
+
+      if (backFace) {
+        const cloneBack = backFace.cloneNode(true);
+        Object.assign(cloneBack.style, {
+          width: '219px',
+          height: '332px',
+          transform: 'none', // flatten the rotation
+          position: 'static',
+          boxSizing: 'border-box'
+        });
+
+        captureContainer.appendChild(cloneBack);
+        try {
+          const canvas = await html2canvas(cloneBack, { scale: 5, backgroundColor: null, useCORS: true });
+          const blob = await new Promise(resolve => canvas.toBlob(resolve));
+          // Naming: Card_Back.png
+          // If in Make Futures, the back color depends on the first card, which is acceptable per requirements ("one of the back").
+          const fileName = `${activeTab}_Card_Back.png`;
+          zip.file(fileName, blob);
+        } catch (err) {
+          console.error("Error capturing card back", err);
+        }
+        captureContainer.removeChild(cloneBack);
+      }
+    }
+
     document.body.removeChild(captureContainer);
     const content = await zip.generateAsync({ type: "blob" });
-    saveAs(content, `${activeTab}_Deck.zip`);
+    saveAs(content, `${activeTab}_Deck_Print.zip`);
   };
 
   return (
