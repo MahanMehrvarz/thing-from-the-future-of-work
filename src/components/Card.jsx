@@ -118,6 +118,9 @@ const Card = ({ category, content, color, flipTrigger, initialFlipped = true, on
                         <div style={{ marginTop: '1rem', color: 'white', fontSize: '3rem' }}>
                             ★
                         </div>
+                        <div style={{ marginTop: 'auto', marginBottom: '1rem', color: 'rgba(255,255,255,0.8)', fontSize: '0.8rem', fontStyle: 'italic', textTransform: 'none' }}>
+                            (tap to flip all cards)
+                        </div>
                     </div>
                 </div>
             </div>
