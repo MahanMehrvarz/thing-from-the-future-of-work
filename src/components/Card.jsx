@@ -89,9 +89,8 @@ const Card = ({ category, content, color, flipTrigger, initialFlipped = true, on
                             </div>
                             <div className="card-footer">
                                 <div className="card-type">{category} card</div>
-                                <div className="card-category-small" style={{ display: 'flex', alignItems: 'center', marginTop: '4px', color: 'white', fontStyle: 'italic', fontSize: '0.8rem' }}>
-                                    <span>AI Futures</span>
-                                    <span style={{ display: 'inline-block', width: '4px' }}></span>
+                                <div className="card-category-small" style={{ marginTop: '4px', color: 'white', fontStyle: 'italic', fontSize: '0.8rem' }}>
+                                    <span style={{ marginRight: '5px' }}>AI Futures</span>
                                     <span>Lab</span>
                                 </div>
                             </div>
@@ -161,9 +160,8 @@ const Card = ({ category, content, color, flipTrigger, initialFlipped = true, on
 
                     <div className="card-footer">
                         <div className="card-type">{category} card</div>
-                        <div className="card-category-small" style={{ display: 'flex', alignItems: 'center', marginTop: '4px', color: 'white', fontStyle: 'italic', fontSize: '0.8rem' }}>
-                            <span>AI Futures</span>
-                            <span style={{ display: 'inline-block', width: '4px' }}></span>
+                        <div className="card-category-small" style={{ marginTop: '4px', color: 'white', fontStyle: 'italic', fontSize: '0.8rem' }}>
+                            <span style={{ marginRight: '5px' }}>AI Futures</span>
                             <span>Lab</span>
                         </div>
                     </div>
