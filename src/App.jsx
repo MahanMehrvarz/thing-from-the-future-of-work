@@ -155,7 +155,7 @@ function App() {
       <header>
         <div className="header-row">
           <h1>Thing from the future of work</h1>
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <div className="controls-container">
             <Tabs
               activeTab={activeTab}
               onTabChange={setActiveTab}
