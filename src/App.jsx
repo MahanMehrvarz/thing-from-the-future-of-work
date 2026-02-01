@@ -49,6 +49,16 @@ function App() {
     setFlipTrigger({ action: side, target: 'all', timestamp: Date.now() });
   };
 
+  const handleMasterToggle = (category) => {
+    setFlipTrigger(prev => {
+      const isSameCat = prev.target === category || prev.target === 'all';
+      // Toggle based on last known state or default. 
+      // Strategy: If last action was front, go back. 
+      const nextAction = (isSameCat && prev.action === 'front') ? 'back' : 'front';
+      return { action: nextAction, target: category, timestamp: Date.now() };
+    });
+  };
+
   const handleShuffleWithAnimation = (categoryOrAll) => {
     // 1. Flip to Back
     const target = categoryOrAll === 'mix' ? 'all' : categoryOrAll;
@@ -213,12 +223,19 @@ function App() {
               onTabChange={setActiveTab}
               colors={COLORS}
             />
-            {/* Global Download Button */}
+            {/* Global Download Button - Styled like Tabs */}
             <button
-              className="control-btn primary"
+              className="tab-button"
               onClick={handleDownloadDeck}
               disabled={isDownloadingDeck}
-              style={{ whiteSpace: 'nowrap' }}
+              style={{
+                whiteSpace: 'nowrap',
+                marginLeft: '1rem',
+                borderColor: '#333',
+                color: isDownloadingDeck ? '#999' : '#333',
+                cursor: isDownloadingDeck ? 'wait' : 'pointer',
+                fontWeight: 700
+              }}
             >
               {isDownloadingDeck ? 'Preparing...' : 'Download Card Deck'}
             </button>
@@ -235,9 +252,10 @@ function App() {
           </>
         ) : (
           <>
-            <button className="control-btn" onClick={() => handleFlipAll('front')}>Show All Content</button>
-            <button className="control-btn" onClick={() => handleFlipAll('back')}>Show All Backs</button>
-            {/* Download button removed from here */}
+            {/* Legacy buttons removed. Master Card controls flipping now. */}
+            <div style={{ color: '#999', fontSize: '0.9rem', fontStyle: 'italic' }}>
+              Click the Master Card (first card) to flip all cards.
+            </div>
           </>
         )}
       </div>
@@ -268,6 +286,8 @@ function App() {
             color={COLORS[activeTab]}
             flipTrigger={flipTrigger}
             initialFlipped={true}
+            hasMasterCard={true} // Enable Master Card
+            onShuffle={handleMasterToggle} // Master Card click handler
           />
         )}
       </main>

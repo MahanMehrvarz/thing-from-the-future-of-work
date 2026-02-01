@@ -19,7 +19,13 @@ const Card = ({ category, content, color, flipTrigger, initialFlipped = true, on
     }, [flipTrigger, category]);
 
     const handleClick = () => {
-        if (onShuffle) {
+        if (isMaster && onShuffle) {
+            // Master card click triggers the "Mass Flip" or "Shuffle" logic passed down
+            onShuffle(category);
+            return;
+        }
+
+        if (onShuffle && !isMaster) {
             onShuffle(category);
         } else {
             setIsFlipped(!isFlipped);
@@ -29,6 +35,32 @@ const Card = ({ category, content, color, flipTrigger, initialFlipped = true, on
     const cardStyle = {
         backgroundColor: color,
     };
+
+    // Master Card Specific Visuals
+    if (isMaster) {
+        return (
+            <div className="card-container" onClick={handleClick}>
+                <div className="card-inner">
+                    <div className="card-face" style={{
+                        ...cardStyle,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        border: '4px solid white', // distinctive border
+                        boxSizing: 'border-box'
+                    }}>
+                        <div style={{ color: 'white', fontSize: '1.5rem', fontWeight: '900', textTransform: 'uppercase', textAlign: 'center' }}>
+                            {category}<br />MASTER
+                        </div>
+                        <div style={{ marginTop: '1rem', color: 'white', fontSize: '3rem' }}>
+                            ★
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     // Content formatting
     let frontText = "";
