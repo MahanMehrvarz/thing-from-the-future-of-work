@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Tabs from './components/Tabs';
 import CardGrid from './components/CardGrid';
@@ -25,6 +25,8 @@ const DATA = {
 function App() {
   const [activeTab, setActiveTab] = useState('Arc');
   const [flipTrigger, setFlipTrigger] = useState({ action: null, timestamp: 0 });
+  const [isDownloadingDeck, setIsDownloadingDeck] = useState(false);
+  const [downloadStatus, setDownloadStatus] = useState(null);
 
   // State for the Mixed Hand
   const [hand, setHand] = useState({
@@ -35,13 +37,19 @@ function App() {
   });
 
   // Initialize hand once on mount
-  React.useEffect(() => {
+  useEffect(() => {
     setHand({
       Arc: getRandom(ARC),
       Terrain: getRandom(TERRAIN),
       Object: getRandom(OBJECT),
       Mood: getRandom(MOOD)
     });
+
+    // Check for hidden route to trigger dynamic generation
+    if (window.location.pathname === '/generatedownload') {
+      console.log('Hidden route detected. Initiating dynamic deck generation...');
+      generateDynamicDeck();
+    }
   }, []);
 
   const handleFlipAll = (side) => {
@@ -150,12 +158,137 @@ function App() {
     document.body.removeChild(link);
   };
 
+  /* 
+     Dynamic Generation Logic (Hidden Route)
+     Triggered ONLY when visiting /generatedownload
+     Restored from robust direct-capture version.
+  */
+  const generateDynamicDeck = async () => {
+    if (isDownloadingDeck) return;
+    setIsDownloadingDeck(true);
+    const initialTab = 'Arc'; // Default, we'll cycle through
+
+    try {
+      const { default: html2canvas } = await import('html2canvas');
+      const { default: JSZip } = await import('jszip');
+      const { saveAs } = await import('file-saver');
+
+      const zip = new JSZip();
+      const categories = ['Arc', 'Terrain', 'Object', 'Mood'];
+
+      // Create a hidden container for cloning and capturing
+      const captureContainer = document.createElement('div');
+      Object.assign(captureContainer.style, {
+        position: 'fixed',
+        left: '-9999px',
+        top: '0',
+        width: 'auto',
+        height: 'auto',
+        zIndex: '-1',
+        visibility: 'visible'
+      });
+      document.body.appendChild(captureContainer);
+
+      for (const cat of categories) {
+        setDownloadStatus(`Switching to ${cat}...`);
+        setActiveTab(cat);
+        // Wait for render
+        await new Promise(r => setTimeout(r, 2000));
+
+        const folder = zip.folder(cat);
+
+        // Capture Back (Logo Side)
+        setDownloadStatus(`Capturing ${cat} Back (Logo)...`);
+        const anyCardContainer = document.querySelector('.card-container:not(.master-card)');
+
+        if (anyCardContainer) {
+          const backFace = anyCardContainer.querySelector('.card-back-rotated');
+          if (backFace) {
+            try {
+              const clone = backFace.cloneNode(true);
+              Object.assign(clone.style, {
+                transform: 'none',
+                position: 'relative',
+                width: '219px',
+                height: '332px',
+                display: 'flex'
+              });
+
+              const rect = backFace.getBoundingClientRect();
+              if (rect.width > 0) {
+                clone.style.width = `${rect.width}px`;
+                clone.style.height = `${rect.height}px`;
+              }
+
+              captureContainer.appendChild(clone);
+              const canvas = await html2canvas(clone, { scale: 3, backgroundColor: null, useCORS: true });
+              const blob = await new Promise(r => canvas.toBlob(r));
+              folder.file('00_Back.png', blob);
+              captureContainer.removeChild(clone);
+            } catch (e) {
+              console.error(`Failed back capture ${cat}`, e);
+            }
+          }
+        }
+
+        // Capture Fronts (Content Side)
+        setDownloadStatus(`Capturing ${cat} Content...`);
+        const contentCards = Array.from(document.querySelectorAll('.card-container:not(.master-card)'));
+
+        for (let i = 0; i < contentCards.length; i++) {
+          setDownloadStatus(`Capturing ${cat} Card ${i + 1}/${contentCards.length}...`);
+          await new Promise(r => setTimeout(r, 20));
+
+          const frontFace = contentCards[i].querySelector('.card-front-default');
+          if (frontFace) {
+            try {
+              const clone = frontFace.cloneNode(true);
+              Object.assign(clone.style, {
+                transform: 'none',
+                position: 'relative',
+                display: 'flex'
+              });
+
+              const rect = frontFace.getBoundingClientRect();
+              if (rect.width > 0) {
+                clone.style.width = `${rect.width}px`;
+                clone.style.height = `${rect.height}px`;
+              }
+
+              captureContainer.appendChild(clone);
+              const canvas = await html2canvas(clone, { scale: 3, backgroundColor: null, useCORS: true });
+              const blob = await new Promise(r => canvas.toBlob(r));
+              folder.file(`Card_${i + 1}.png`, blob);
+              captureContainer.removeChild(clone);
+            } catch (e) {
+              console.error(`Failed card capture ${cat} ${i}`, e);
+            }
+          }
+        }
+      }
+
+      document.body.removeChild(captureContainer);
+      setDownloadStatus('Zipping...');
+      const content = await zip.generateAsync({ type: 'blob' });
+      saveAs(content, 'Thing_From_Future_Full_Deck.zip');
+
+    } catch (error) {
+      console.error("Failed to generate deck:", error);
+      alert("Error generating deck: " + error.message);
+    } finally {
+      setIsDownloadingDeck(false);
+      setDownloadStatus(null);
+      // Optional: Redirect back to home after generation?
+      // window.location.href = '/'; 
+    }
+  };
+
   return (
     <div className="app-container">
       <header>
         <div className="header-row">
           <h1>Thing from the future of work</h1>
-          <div className="controls-container">
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
             <Tabs
               activeTab={activeTab}
               onTabChange={setActiveTab}
@@ -189,7 +322,6 @@ function App() {
           </>
         ) : (
           <>
-            {/* Legacy buttons removed. Master Card controls flipping now. */}
             <div style={{ color: '#999', fontSize: '0.9rem', fontStyle: 'italic' }}>
               Click the Master Card (first card) to flip all cards.
             </div>
@@ -203,7 +335,6 @@ function App() {
             {['Arc', 'Terrain', 'Object', 'Mood'].map(cat => (
               hand[cat] && (
                 <div key={cat} className="mix-card-wrapper">
-                  {/* Pass onShuffle to enable click-to-shuffle-animation */}
                   <CardGrid
                     cards={[hand[cat]]}
                     category={cat}
@@ -223,13 +354,46 @@ function App() {
             color={COLORS[activeTab]}
             flipTrigger={flipTrigger}
             initialFlipped={true}
-            hasMasterCard={true} // Enable Master Card
-            onShuffle={handleMasterToggle} // Master Card click handler
+            hasMasterCard={true}
+            onShuffle={handleMasterToggle}
           />
         )}
       </main>
 
-      {/* Footer removed as requested */}
+      {/* Progress Overlay - Only visible during dynamic generation */}
+      {downloadStatus && (
+        <div style={{
+          position: 'fixed',
+          top: 0, left: 0, width: '100%', height: '100%',
+          backgroundColor: 'rgba(0,0,0,0.9)',
+          zIndex: 10000,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          color: 'white',
+          fontSize: '1.5rem',
+          fontFamily: 'Inter, sans-serif',
+          pointerEvents: 'all'
+        }}>
+          <div style={{ marginBottom: '1rem' }}>Generating Deck...</div>
+          <div style={{
+            fontSize: '1rem',
+            opacity: 1,
+            fontFamily: 'monospace',
+            backgroundColor: '#222',
+            padding: '8px 16px',
+            borderRadius: '6px',
+            border: '1px solid #444',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
+          }}>
+            {downloadStatus}
+          </div>
+          <div style={{ marginTop: '2rem', fontSize: '0.9rem', color: '#888', maxWidth: '400px', textAlign: 'center' }}>
+            Please do not close this tab or resize the window.
+          </div>
+        </div>
+      )}
     </div >
   );
 }
