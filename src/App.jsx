@@ -320,13 +320,7 @@ function App() {
             <div style={{ width: '20px' }}></div>
             <button className="control-btn" onClick={handleDownloadMix}>Download Mix</button>
           </>
-        ) : (
-          <>
-            <div style={{ color: '#999', fontSize: '0.9rem', fontStyle: 'italic' }}>
-              Click the Master Card (first card) to flip all cards.
-            </div>
-          </>
-        )}
+        ) : null}
       </div>
 
       <main>
