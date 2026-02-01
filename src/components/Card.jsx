@@ -89,7 +89,7 @@ const Card = ({ category, content, color, flipTrigger, initialFlipped = true, on
                             </div>
                             <div className="card-footer">
                                 <div className="card-type">{category} card</div>
-                                <div className="card-category-small">AI Futures Lab</div>
+
                             </div>
                         </div>
                     </div>
