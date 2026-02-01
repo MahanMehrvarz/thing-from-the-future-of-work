@@ -112,13 +112,10 @@ const Card = ({ category, content, color, flipTrigger, initialFlipped = true, on
                         border: '4px solid white', // distinctive border
                         boxSizing: 'border-box'
                     }}>
-                        <div style={{ color: 'white', fontSize: '1.5rem', fontWeight: '900', textTransform: 'uppercase', textAlign: 'center' }}>
-                            {category}<br />MASTER
+                        <div style={{ color: 'white', fontSize: '2rem', fontWeight: '900', textTransform: 'uppercase', textAlign: 'center', lineHeight: '1.1', letterSpacing: '0.05em' }}>
+                            {category}<br /><span style={{ fontSize: '1.5rem', fontWeight: '700' }}>MASTER</span>
                         </div>
-                        <div style={{ marginTop: '1rem', color: 'white', fontSize: '3rem' }}>
-                            ★
-                        </div>
-                        <div style={{ marginTop: 'auto', marginBottom: '1rem', color: 'rgba(255,255,255,0.8)', fontSize: '0.8rem', fontStyle: 'italic', textTransform: 'none' }}>
+                        <div style={{ position: 'absolute', bottom: '1.5rem', color: 'rgba(255,255,255,0.8)', fontSize: '0.8rem', fontStyle: 'italic', textTransform: 'none' }}>
                             (tap to flip all cards)
                         </div>
                     </div>
