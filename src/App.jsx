@@ -25,7 +25,6 @@ const DATA = {
 function App() {
   const [activeTab, setActiveTab] = useState('Arc');
   const [flipTrigger, setFlipTrigger] = useState({ action: null, timestamp: 0 });
-  const [isDownloadingDeck, setIsDownloadingDeck] = useState(false);
 
   // State for the Mixed Hand
   const [hand, setHand] = useState({
@@ -138,79 +137,18 @@ function App() {
     saveAs(content, `Make_Futures_Hand_Print.zip`);
   };
 
+  /* 
+     Simplified Download: Static File
+     User requested to just download the pre-generated zip file.
+  */
   const handleDownloadDeck = () => {
-    if (isDownloadingDeck) return;
-    setIsDownloadingDeck(true);
+    const link = document.createElement('a');
+    link.href = '/Thing_From_Future_Full_Deck.zip';
+    link.download = 'Thing_From_Future_Full_Deck.zip';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
-
-  // Effect to perform the download once the hidden rendering is ready
-  React.useEffect(() => {
-    if (!isDownloadingDeck) return;
-
-    const performDownload = async () => {
-      const { default: html2canvas } = await import('html2canvas');
-      const { default: JSZip } = await import('jszip');
-      const { saveAs } = await import('file-saver');
-
-      const zip = new JSZip();
-      // We need to wait a tick for React to render the hidden elements
-      await new Promise(r => setTimeout(r, 800));
-
-      const captureContainer = document.getElementById('full-deck-capture-container');
-      if (!captureContainer) {
-        console.error("Capture container not found!");
-        setIsDownloadingDeck(false);
-        return;
-      }
-
-      // Helper to capture an element safely by cloning and flattening
-      const captureElement = async (element, fileName) => {
-        if (!element) return;
-        const clone = element.cloneNode(true);
-        Object.assign(clone.style, {
-          width: '219px',
-          height: '332px',
-          transform: 'none',
-          position: 'fixed',
-          left: '-9999px',
-          top: '0',
-          boxSizing: 'border-box'
-        });
-        // Append clone to body or capture container to ensure it renders for html2canvas
-        document.body.appendChild(clone);
-        try {
-          const canvas = await html2canvas(clone, { scale: 5, backgroundColor: null, useCORS: true });
-          const blob = await new Promise(resolve => canvas.toBlob(resolve));
-          zip.file(fileName, blob);
-        } catch (e) {
-          console.error(`Error capturing ${fileName}`, e);
-        }
-        document.body.removeChild(clone);
-      };
-
-      // 1. Capture Backs (one per category)
-      const categories = ['Arc', 'Terrain', 'Object', 'Mood'];
-      for (const cat of categories) {
-        const backEl = captureContainer.querySelector(`.capture-back-${cat} .card-back-rotated`);
-        await captureElement(backEl, `${cat}/00_Back.png`);
-      }
-
-      // 2. Capture Fronts (all cards per category)
-      for (const cat of categories) {
-        const cardWrappers = Array.from(captureContainer.querySelectorAll(`.capture-front-${cat}`));
-        for (let i = 0; i < cardWrappers.length; i++) {
-          const frontEl = cardWrappers[i].querySelector('.card-front-default');
-          await captureElement(frontEl, `${cat}/Card_${i + 1}.png`);
-        }
-      }
-
-      const content = await zip.generateAsync({ type: "blob" });
-      saveAs(content, `Thing_From_Future_Full_Deck.zip`);
-      setIsDownloadingDeck(false);
-    };
-
-    performDownload();
-  }, [isDownloadingDeck]);
 
   return (
     <div className="app-container">
@@ -223,25 +161,24 @@ function App() {
               onTabChange={setActiveTab}
               colors={COLORS}
             />
-            {/* Global Download Button - Styled like Tabs */}
+            {/* Global Download Button - Static Download */}
             <button
               className="tab-button"
               onClick={handleDownloadDeck}
-              disabled={isDownloadingDeck}
               style={{
                 whiteSpace: 'nowrap',
                 marginLeft: '1rem',
                 borderColor: '#333',
-                color: isDownloadingDeck ? '#999' : '#333',
-                cursor: isDownloadingDeck ? 'wait' : 'pointer',
+                color: '#333',
+                cursor: 'pointer',
                 fontWeight: 700
               }}
             >
-              {isDownloadingDeck ? 'Preparing...' : 'Download Card Deck'}
+              Download Card Deck
             </button>
-          </div>
-        </div>
-      </header>
+          </div >
+        </div >
+      </header >
 
       <div className="control-bar">
         {activeTab === 'Make Futures' ? (
@@ -291,52 +228,6 @@ function App() {
           />
         )}
       </main>
-
-      {/* Hidden Render Container for Full Deck Download */}
-      {
-        isDownloadingDeck && (
-          <div
-            id="full-deck-capture-container"
-            style={{
-              position: 'fixed',
-              left: '-9999px',
-              top: 0,
-              width: '10000px', // Ensure enough space so no unintended wrapping/squashing
-            }}
-          >
-            {/* 1. Backs for each category */}
-            {['Arc', 'Terrain', 'Object', 'Mood'].map(cat => (
-              <div key={`back-${cat}`} className={`capture-back-${cat} card-grid`} style={{ display: 'block' }}>
-                {/* card-grid class optionally allows picking up default styles if needed, but we manually style wrapper */}
-                <div style={{ width: '219px', height: '332px' }}>
-                  <Card
-                    category={cat}
-                    content={{}} // Dummy content for back
-                    color={COLORS[cat]}
-                    initialFlipped={true} // show back
-                  />
-                </div>
-              </div>
-            ))}
-
-            {/* 2. Fronts for each category */}
-            {['Arc', 'Terrain', 'Object', 'Mood'].map(cat => (
-              DATA[cat].map((cardData, idx) => (
-                <div key={`front-${cat}-${idx}`} className={`capture-front-${cat} card-grid`} style={{ display: 'block' }}>
-                  <div style={{ width: '219px', height: '332px' }}>
-                    <Card
-                      category={cat}
-                      content={cardData}
-                      color={COLORS[cat]}
-                      initialFlipped={false} // show front
-                    />
-                  </div>
-                </div>
-              ))
-            ))}
-          </div>
-        )
-      }
 
       {/* Footer removed as requested */}
     </div >

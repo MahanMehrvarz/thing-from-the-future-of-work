@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Card = ({ category, content, color, flipTrigger, initialFlipped = true, onShuffle }) => {
+const Card = ({ category, content, color, flipTrigger, initialFlipped = true, onShuffle, isMaster, isCapture }) => {
     const [isFlipped, setIsFlipped] = useState(initialFlipped);
 
     useEffect(() => {
@@ -36,10 +36,72 @@ const Card = ({ category, content, color, flipTrigger, initialFlipped = true, on
         backgroundColor: color,
     };
 
+    // Simplified Static Render for Capture (No state, no effects, no events)
+    if (isCapture) {
+        let fText = "";
+        let sText = "";
+        if (category === "Arc") {
+            fText = content?.time || "";
+            sText = content?.type || "";
+        } else {
+            fText = content?.content || "";
+        }
+
+        // Visual Logic
+        const style = { backgroundColor: color };
+
+        // Return ONLY the visible face based on initialFlipped
+        // If initialFlipped is true, we want the BACK face.
+        // If false, we want the FRONT face.
+
+        if (initialFlipped) {
+            // Back
+            return (
+                <div className="card-container flipped" style={{ pointerEvents: 'none' }}>
+                    <div className="card-inner">
+                        <div className="card-face card-back-rotated" style={style}>
+                            <div className="circles-grid">
+                                {[...Array(12)].map((_, i) => <div key={i} className="circle"></div>)}
+                            </div>
+                            <div className="card-title-back">
+                                THING<br />FROM<br />THE FUTURE<br />OF WORK
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        } else {
+            // Front
+            return (
+                <div className="card-container" style={{ pointerEvents: 'none' }}>
+                    <div className="card-inner">
+                        <div className="card-face card-front-default" style={style}>
+                            <div className="quote-icon">❝</div>
+                            <div className="card-content-quote">
+                                {category === "Arc" ? (
+                                    <>
+                                        <span style={{ opacity: 0.8, fontSize: '0.8em', display: 'block', marginBottom: '10px' }}>{sText}</span>
+                                        {fText}
+                                    </>
+                                ) : (
+                                    fText
+                                )}
+                            </div>
+                            <div className="card-footer">
+                                <div className="card-type">{category} card</div>
+                                <div className="card-category-small">AI Futures Lab</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+    }
+
     // Master Card Specific Visuals
     if (isMaster) {
         return (
-            <div className="card-container" onClick={handleClick}>
+            <div className="card-container master-card" onClick={handleClick}>
                 <div className="card-inner">
                     <div className="card-face" style={{
                         ...cardStyle,
