@@ -126,27 +126,107 @@ header {
 }
 
 
+/* ... previous styles ... */
+
+/* Header Controls - Match Tabs Look */
 .control-btn {
-  padding: 0.6rem 1.2rem;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 100px;
+  /* Pill shape */
+  background: white;
+  color: #333;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.9rem;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .control-btn:hover {
-  background-color: #f0f0f0;
+  background-color: rgba(0, 0, 0, 0.03);
   transform: translateY(-1px);
+  color: #111;
+  border-color: rgba(0, 0, 0, 0.2);
 }
 
 .control-btn.primary {
-  background-color: #333;
-  color: white;
-  border-color: #333;
+  /* Remove the solid gray/black to match tabs style, or use a specific active style if needed */
+  /* For now, making them identical to tabs as requested "match tabs" */
+  background-color: white;
+  color: #111;
+  border-color: #111;
 }
+
+/* Master Card Title - Smaller */
+.card-title-back {
+  font-size: 1.5rem;
+  /* Reduced from 2rem */
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  text-align: left;
+  margin-top: auto;
+}
+
+/* App Container - Sticky Footer Setup */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-bottom: 0;
+  /* Remove old padding */
+}
+
+main {
+  flex: 1;
+  /* Pushes footer to bottom */
+}
+
+/* Footer Layout - Alignment Best Practices */
+.site-footer {
+  background-color: #0a0a0a;
+  color: #666;
+  padding: 4rem 2rem;
+  /* Match grid padding roughly */
+  margin-top: auto;
+  border-top: 1px solid #1a1a1a;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.footer-content {
+  /* Match the max-width of the main grid for alignment consistency */
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  /* keep centered for now, as text is centered */
+}
+
+/* Button in Footer - Consistent styling */
+.footer-section.download button {
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 100px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.footer-section.download button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
 
 /* Header Controls Container */
 .header-controls {
