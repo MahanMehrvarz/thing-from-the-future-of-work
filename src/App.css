@@ -140,6 +140,22 @@ header h1 {
   border-color: #333;
 }
 
+/* Header Controls Container */
+.header-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .header-controls {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+
 .tab-button {
   padding: 0.6rem 1.4rem;
   border: 1px solid rgba(0, 0, 0, 0.1);

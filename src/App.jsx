@@ -289,7 +289,7 @@ function App() {
       <header>
         <div className="header-row">
           <h1>Thing From The Future of Work</h1>
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <div className="header-controls">
             <Tabs
               activeTab={activeTab}
               onTabChange={setActiveTab}
