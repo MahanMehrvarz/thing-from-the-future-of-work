@@ -295,34 +295,18 @@ function App() {
               onTabChange={setActiveTab}
               colors={COLORS}
             />
-            {/* Global Download Button - Static Download */}
-            <button
-              className="tab-button"
-              onClick={handleDownloadDeck}
-              style={{
-                whiteSpace: 'nowrap',
-                marginLeft: '1rem',
-                borderColor: '#333',
-                color: '#333',
-                cursor: 'pointer',
-                fontWeight: 700
-              }}
-            >
-              Download Card Deck
-            </button>
           </div >
         </div >
-      </header >
 
-      <div className="control-bar">
-        {activeTab === 'Make Futures' ? (
-          <>
+        {/* Control Bar - Sticky below header logic */}
+        {activeTab === 'Make Futures' && (
+          <div className="control-bar">
             <button className="control-btn primary" onClick={handleShuffleMix}>Shuffle Mix</button>
             <div style={{ width: '20px' }}></div>
             <button className="control-btn" onClick={handleDownloadMix}>Download Mix</button>
-          </>
-        ) : null}
-      </div>
+          </div>
+        )}
+      </header >
 
       <main>
         {activeTab === 'Make Futures' ? (
@@ -355,7 +339,7 @@ function App() {
         )}
       </main>
 
-      <Footer />
+      <Footer onDownloadDeck={handleDownloadDeck} />
 
       {/* Progress Overlay - Only visible during dynamic generation */}
       {downloadStatus && (
