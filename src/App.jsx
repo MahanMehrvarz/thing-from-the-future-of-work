@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Tabs from './components/Tabs';
 import CardGrid from './components/CardGrid';
+import Footer from './components/Footer';
 import { ARC, TERRAIN, OBJECT, MOOD } from './data/cards';
 
 // Helper to pick random item
@@ -353,6 +354,8 @@ function App() {
           />
         )}
       </main>
+
+      <Footer />
 
       {/* Progress Overlay - Only visible during dynamic generation */}
       {downloadStatus && (

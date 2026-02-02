@@ -498,3 +498,47 @@ header h1 {
     border-width: 2px;
   }
 }
+
+/* Footer Styles */
+.site-footer {
+  background-color: #111;
+  color: #888;
+  padding: 3rem 1rem;
+  margin-top: auto;
+  border-top: 1px solid #222;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.footer-content p {
+  margin: 0;
+}
+
+.footer-content a {
+  color: #bbb;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+}
+
+.footer-content a:hover {
+  color: #fff;
+  border-bottom-color: rgba(255, 255, 255, 0.8);
+}
+
+@media (max-width: 600px) {
+  .site-footer {
+    padding: 2rem 1rem;
+    font-size: 0.8rem;
+  }
+}
