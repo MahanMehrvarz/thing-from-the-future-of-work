@@ -17,15 +17,7 @@ const Footer = () => {
                     <a href="mailto:mahan.mehrvarz@hotmail.com">mahan.mehrvarz@hotmail.com</a>
                 </div>
 
-                {/* 3. Reappropriation / Credits */}
-                <div className="footer-section credits">
-                    <p>
-                        Reappropriated by <a href="https://dave.murray-rust.org/" target="_blank" rel="noopener noreferrer">Dave Murray-Rust</a> & <a href="https://mahanmehrvarz.name/" target="_blank" rel="noopener noreferrer">Mahan Mehrvarz</a>
-                    </p>
-                    <p className="sub-credit">
-                        via the <a href="https://www.tudelft.nl/ai/ai-futures-lab" target="_blank" rel="noopener noreferrer">AI Futures Lab</a>
-                    </p>
-                </div>
+
             </div>
         </footer>
     );
