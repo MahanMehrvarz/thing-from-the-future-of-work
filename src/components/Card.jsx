@@ -25,8 +25,12 @@ const Card = ({ category, content, color, flipTrigger, initialFlipped = true, on
             return;
         }
 
-        // Individual cards just flip locally
-        setIsFlipped(!isFlipped);
+        if (onShuffle && !isMaster) {
+            onShuffle(category);
+        } else {
+            // Individual cards just flip locally if no shuffle logic provided
+            setIsFlipped(!isFlipped);
+        }
     };
 
     const cardStyle = {

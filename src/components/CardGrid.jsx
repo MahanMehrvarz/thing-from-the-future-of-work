@@ -26,7 +26,7 @@ const CardGrid = ({ cards, category, color, flipTrigger, initialFlipped = true, 
                     color={color}
                     flipTrigger={flipTrigger}
                     initialFlipped={initialFlipped}
-                    onShuffle={onShuffle}
+                    onShuffle={hasMasterCard ? undefined : onShuffle}
                 />
             ))}
         </div>
