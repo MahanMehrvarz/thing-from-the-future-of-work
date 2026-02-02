@@ -499,46 +499,77 @@ header h1 {
   }
 }
 
-/* Footer Styles */
+/* Footer Styles - Refined */
 .site-footer {
-  background-color: #111;
-  color: #888;
-  padding: 3rem 1rem;
+  background-color: #0a0a0a;
+  color: #666;
+  padding: 4rem 1rem 3rem;
   margin-top: auto;
-  border-top: 1px solid #222;
+  border-top: 1px solid #1a1a1a;
   font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
-  line-height: 1.6;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  text-align: center;
 }
 
 .footer-content {
-  max-width: 800px;
+  max-width: 600px;
   margin: 0 auto;
-  text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
+  /* Increased gap for better separation */
+  align-items: center;
 }
 
-.footer-content p {
-  margin: 0;
+.footer-section p {
+  margin: 0.25rem 0;
 }
 
+/* 1. Attribution (Top) */
+.footer-section.attribution {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+/* 2. Contact (Middle) */
+.footer-section.contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: #666;
+  font-size: 0.8rem;
+}
+
+/* 3. Credits (Bottom) */
+.footer-section.credits {
+  font-weight: 400;
+  color: #555;
+  font-size: 0.75rem;
+  margin-top: 1rem;
+  /* Extra separation for the signature */
+}
+
+.footer-section.credits .sub-credit {
+  color: #444;
+}
+
+
+/* Global Footer Links */
 .footer-content a {
-  color: #bbb;
+  color: inherit;
   text-decoration: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.2s ease;
 }
 
 .footer-content a:hover {
-  color: #fff;
-  border-bottom-color: rgba(255, 255, 255, 0.8);
+  color: #ccc;
+  border-bottom-color: rgba(255, 255, 255, 0.5);
 }
 
 @media (max-width: 600px) {
   .site-footer {
-    padding: 2rem 1rem;
-    font-size: 0.8rem;
+    padding: 3rem 1.5rem;
   }
 }
