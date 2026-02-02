@@ -287,7 +287,7 @@ function App() {
     <div className="app-container">
       <header>
         <div className="header-row">
-          <h1>Thing from the future of work</h1>
+          <h1>Thing From The Future of Work</h1>
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
             <Tabs
               activeTab={activeTab}

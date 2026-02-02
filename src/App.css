@@ -78,7 +78,7 @@ header h1 {
   letter-spacing: -0.05em;
   /* Tighter tracking */
   color: #111;
-  text-transform: uppercase;
+  /* text-transform: uppercase; Removed to respect specific casing */
   background: linear-gradient(135deg, #111 0%, #444 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
