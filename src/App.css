@@ -111,17 +111,17 @@ header {
 .control-bar {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 1rem;
   padding: 1rem 2rem;
   width: 100%;
   position: relative;
-  /* Changed from sticky to relative since parent is sticky */
   top: auto;
   z-index: 2000;
   background-color: transparent;
-  /* Transparent so it blends with header, or match header bg */
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
-  /* Separator from header content */
+  /* No gray background */
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  /* Tiny dividing line */
   margin-bottom: 0;
 }
 
