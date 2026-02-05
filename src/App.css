@@ -540,10 +540,10 @@ main {
     padding: 0.6rem;
     gap: 0.5rem;
     flex-wrap: wrap;
-    /* Glassmorphism for Control Bar */
-    background-color: rgba(245, 245, 245, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background-color: transparent;
+    /* Fix: remove gray background */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     border-top: 1px solid rgba(0, 0, 0, 0.08);
   }
 
@@ -617,7 +617,8 @@ main {
 }
 
 .footer-content {
-  max-width: 600px;
+  max-width: 1400px;
+  /* Match grid width */
   margin: 0 auto;
   display: flex;
   flex-direction: column;

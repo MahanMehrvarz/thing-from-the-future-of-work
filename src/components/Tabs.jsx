@@ -2,8 +2,8 @@ import React from 'react';
 
 const tabs = [
     { id: 'Arc', label: 'Arc' },
-    { id: 'Terrain', label: 'Terrain' },
     { id: 'Object', label: 'Object' },
+    { id: 'Terrain', label: 'Terrain' },
     { id: 'Mood', label: 'Mood' },
     { id: 'Make Futures', label: 'Make Futures' }
 ];

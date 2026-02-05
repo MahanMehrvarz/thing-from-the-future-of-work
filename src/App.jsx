@@ -10,16 +10,16 @@ const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 const COLORS = {
   Arc: '#E53935',
-  Terrain: '#43A047',
   Object: '#1E88E5',
+  Terrain: '#43A047',
   Mood: '#FB8C00',
   'Make Futures': '#222'
 };
 
 const DATA = {
   Arc: ARC,
-  Terrain: TERRAIN,
   Object: OBJECT,
+  Terrain: TERRAIN,
   Mood: MOOD
 };
 
@@ -41,8 +41,8 @@ function App() {
   useEffect(() => {
     setHand({
       Arc: getRandom(ARC),
-      Terrain: getRandom(TERRAIN),
       Object: getRandom(OBJECT),
+      Terrain: getRandom(TERRAIN),
       Mood: getRandom(MOOD)
     });
 
@@ -78,8 +78,8 @@ function App() {
       if (categoryOrAll === 'mix') {
         setHand({
           Arc: getRandom(ARC),
-          Terrain: getRandom(TERRAIN),
           Object: getRandom(OBJECT),
+          Terrain: getRandom(TERRAIN),
           Mood: getRandom(MOOD)
         });
       } else {
@@ -175,7 +175,7 @@ function App() {
       const { saveAs } = await import('file-saver');
 
       const zip = new JSZip();
-      const categories = ['Arc', 'Terrain', 'Object', 'Mood'];
+      const categories = ['Arc', 'Object', 'Terrain', 'Mood'];
 
       // Create a hidden container for cloning and capturing
       const captureContainer = document.createElement('div');
@@ -311,7 +311,7 @@ function App() {
       <main>
         {activeTab === 'Make Futures' ? (
           <div className="mix-grid">
-            {['Arc', 'Terrain', 'Object', 'Mood'].map(cat => (
+            {['Arc', 'Object', 'Terrain', 'Mood'].map(cat => (
               hand[cat] && (
                 <div key={cat} className="mix-card-wrapper">
                   <CardGrid
