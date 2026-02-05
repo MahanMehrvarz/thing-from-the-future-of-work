@@ -42,8 +42,8 @@ const Card = ({ category, content, color, flipTrigger, initialFlipped = true, on
         let fText = "";
         let sText = "";
         if (category === "Arc") {
-            fText = content?.time || "";
-            sText = content?.type || "";
+            fText = content?.type || "";
+            sText = content?.time || "";
         } else {
             fText = content?.content || "";
         }
@@ -133,8 +133,8 @@ const Card = ({ category, content, color, flipTrigger, initialFlipped = true, on
     let subText = "";
 
     if (category === "Arc") {
-        frontText = content.time;
-        subText = content.type;
+        frontText = content.type;
+        subText = content.time;
     } else {
         frontText = content.content;
     }

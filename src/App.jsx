@@ -3,6 +3,7 @@ import './App.css';
 import Tabs from './components/Tabs';
 import CardGrid from './components/CardGrid';
 import Footer from './components/Footer';
+import SynthesizedSentence from './components/SynthesizedSentence';
 import { ARC, TERRAIN, OBJECT, MOOD } from './data/cards';
 
 // Helper to pick random item
@@ -310,22 +311,25 @@ function App() {
 
       <main>
         {activeTab === 'Make Futures' ? (
-          <div className="mix-grid">
-            {['Arc', 'Object', 'Terrain', 'Mood'].map(cat => (
-              hand[cat] && (
-                <div key={cat} className="mix-card-wrapper">
-                  <CardGrid
-                    cards={[hand[cat]]}
-                    category={cat}
-                    color={COLORS[cat]}
-                    flipTrigger={flipTrigger}
-                    initialFlipped={false}
-                    onShuffle={handleShuffleWithAnimation}
-                  />
-                </div>
-              )
-            ))}
-          </div>
+          <>
+            <div className="mix-grid">
+              {['Arc', 'Object', 'Terrain', 'Mood'].map(cat => (
+                hand[cat] && (
+                  <div key={cat} className="mix-card-wrapper">
+                    <CardGrid
+                      cards={[hand[cat]]}
+                      category={cat}
+                      color={COLORS[cat]}
+                      flipTrigger={flipTrigger}
+                      initialFlipped={false}
+                      onShuffle={handleShuffleWithAnimation}
+                    />
+                  </div>
+                )
+              ))}
+            </div>
+            <SynthesizedSentence hand={hand} colors={COLORS} />
+          </>
         ) : (
           <CardGrid
             cards={DATA[activeTab]}
@@ -342,39 +346,41 @@ function App() {
       <Footer onDownloadDeck={handleDownloadDeck} />
 
       {/* Progress Overlay - Only visible during dynamic generation */}
-      {downloadStatus && (
-        <div style={{
-          position: 'fixed',
-          top: 0, left: 0, width: '100%', height: '100%',
-          backgroundColor: 'rgba(0,0,0,0.9)',
-          zIndex: 10000,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          color: 'white',
-          fontSize: '1.5rem',
-          fontFamily: 'Inter, sans-serif',
-          pointerEvents: 'all'
-        }}>
-          <div style={{ marginBottom: '1rem' }}>Generating Deck...</div>
+      {
+        downloadStatus && (
           <div style={{
-            fontSize: '1rem',
-            opacity: 1,
-            fontFamily: 'monospace',
-            backgroundColor: '#222',
-            padding: '8px 16px',
-            borderRadius: '6px',
-            border: '1px solid #444',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
+            position: 'fixed',
+            top: 0, left: 0, width: '100%', height: '100%',
+            backgroundColor: 'rgba(0,0,0,0.9)',
+            zIndex: 10000,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            color: 'white',
+            fontSize: '1.5rem',
+            fontFamily: 'Inter, sans-serif',
+            pointerEvents: 'all'
           }}>
-            {downloadStatus}
+            <div style={{ marginBottom: '1rem' }}>Generating Deck...</div>
+            <div style={{
+              fontSize: '1rem',
+              opacity: 1,
+              fontFamily: 'monospace',
+              backgroundColor: '#222',
+              padding: '8px 16px',
+              borderRadius: '6px',
+              border: '1px solid #444',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
+            }}>
+              {downloadStatus}
+            </div>
+            <div style={{ marginTop: '2rem', fontSize: '0.9rem', color: '#888', maxWidth: '400px', textAlign: 'center' }}>
+              Please do not close this tab or resize the window.
+            </div>
           </div>
-          <div style={{ marginTop: '2rem', fontSize: '0.9rem', color: '#888', maxWidth: '400px', textAlign: 'center' }}>
-            Please do not close this tab or resize the window.
-          </div>
-        </div>
-      )}
+        )
+      }
     </div >
   );
 }
