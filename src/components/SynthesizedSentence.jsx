@@ -28,7 +28,7 @@ const SynthesizedSentence = ({ hand, colors }) => {
     return (
         <div className="synthesized-sentence-container">
             <p className="synthesized-sentence">
-                In a {renderSpan('Arc')} future there is an {renderSpan('Object')} related to {renderSpan('Terrain')} that inspires {renderSpan('Mood')}.
+                In a(n) {renderSpan('Arc')} future there is a(n) {renderSpan('Object')} related to {renderSpan('Terrain')} that inspires {renderSpan('Mood')}.
                 <br />
                 <span className="sentence-prompt">What is it?</span>
             </p>

@@ -28,7 +28,7 @@ export const ARC = [
   { category: "Arc", type: "Transformation", time: "A century" },
   { category: "Arc", type: "Transformation", time: "A millennium" },
 ];
-
+/*
 export const TERRAIN = [
   "Temporary courtroom for algorithmic labour disputes",
   "Cold storage depot for climate-shifted food supplies",
@@ -88,6 +88,31 @@ export const TERRAIN = [
   "River maintenance base servicing floating solar installations",
   "Regional retraining centre for displaced automation workers",
 ].map(text => ({ category: "Terrain", content: text }));
+*/
+
+export const TERRAIN = [
+  "Autonomous street cleaning",
+  "Algorithmic courtrooms",
+  "Cold storage facility",
+  "Robot Repair",
+  "Pop - up factories",
+  "Flood - adaptation",
+  "Recycling",
+  "Ghost kitchens",
+  "Biomaterials",
+  "Wind power",
+  "Automated Planning",
+  "Urban renewal",
+  "Disaster Response",
+  "Retrofitting Technology",
+  "Government",
+  "Archives",
+  "Medical Aids",
+  "Farming",
+  "Data infrastructure",
+  "Border inspection"
+].map(text => ({ category: "Terrain", content: text }));
+
 
 export const OBJECT = [
   "Advertisement", "Artwork", "Beverage", "Book", "Bottle", "Box", "Brochure",
